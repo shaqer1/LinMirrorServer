@@ -137,10 +137,9 @@ IRCServer::processRequest( int fd )
 	//
 
 	// Read character by character until a \n is found or the command string is full.
-	std::string commandStr("");
-	std::string userStr("");
-	std::string passwordStr("");
-	std::string argsStr("");
+	std::string packageName("");
+	std::string category("");
+	std::string message("");
 	int word = 0;
 	while ( commandLineLength < MaxCommandLine &&
 		read( fd, &newChar, 1) > 0 ) {
@@ -148,12 +147,11 @@ IRCServer::processRequest( int fd )
 			break;
 		}
 		if(newChar !=' '){
-		  if(word == 0){commandStr += newChar;}
-		  else if(word==1){userStr += newChar;}
-		  else if(word==2){passwordStr += newChar;}
-		  else if(word==3){argsStr += newChar;}
+		  if(word == 0){packageName += newChar;}
+		  else if(word==1){category += newChar;}
+		  else if(word==2){message += newChar;}
 		}else if(newChar == ' '){
-		  if(word == 3){argsStr += newChar;}
+		  if(word == 2){message += newChar;}
 		  else{word++;}
 		}
 		commandLine[ commandLineLength ] = newChar;
@@ -173,16 +171,16 @@ IRCServer::processRequest( int fd )
 	//printf("COMMAND <user> <password> <arguments>. See below.\n");
 	//printf("You need to separate the commandLine into those components\n");
 	//printf("For now, command, user, and password are hardwired.\n");
-	unsigned int size_t = passwordStr.length();
-	if(passwordStr[size_t-1] == '\r'){
-	  passwordStr = passwordStr.substr(0,size_t-1);
+	unsigned int size_t = message.length();
+	if(message[size_t-1] == '\r'){
+	  message = message.substr(0,size_t-1);
 	}
-	unsigned int size_tArgs = argsStr.length();
+	/*unsigned int size_tArgs = argsStr.length();
 	if(size_tArgs > 0 && argsStr[size_tArgs-1] == '\r'){
 	  argsStr = argsStr.substr(0,size_tArgs-1);
-	}
+	}*/
 	       
-	char * command = new char [commandStr.length()+1];
+	/*char * command = new char [commandStr.length()+1];
 	char * user = new char [userStr.length()+1];
 	char * password = new char [passwordStr.length()+1];
 	char * args = new char [argsStr.length()+1];
@@ -193,9 +191,9 @@ IRCServer::processRequest( int fd )
 	printf("command=%s\n", command);
 	printf("user=%s\n", user);
 	printf( "password=%s\n", password );
-	printf("args=%s\n", args);
+	printf("args=%s\n", args);*/
 
-	if (!strcmp(command, "ADD-USER")) {
+	/*if (!strcmp(command, "ADD-USER")) {
 
 	}
 	else if (!strcmp(command, "ENTER-ROOM")) {
@@ -204,7 +202,9 @@ IRCServer::processRequest( int fd )
 	else {
 		const char * msg =  "UNKNOWN COMMAND\r\n";
 		write(fd, msg, strlen(msg));
-	}
+	}*/
+
+	system("notify-send "+packageName+"\n"+category+": "+ message);
 
 	// Send OK answer
 	const char * msg =  "OK\n";
