@@ -33,6 +33,11 @@ const char * usage =
 #include <iostream>
 #include <fstream>
 
+#include "Server.h"
+
+
+int QueueLength = 5;
+
 int
 main( int argc, char ** argv )
 {
@@ -45,13 +50,13 @@ main( int argc, char ** argv )
 	// Get the port from the arguments
 	int port = atoi( argv[1] );
 
-	IRCServer ircServer;
+	Server server;
 
 	// It will never return
-	ircServer.runServer(port);	
+	server.runServer(port);	
 }
 void
-IRCServer::runServer(int port)
+Server::runServer(int port)
 {
 	int masterSocket = open_server_socket(port);
 	
@@ -75,7 +80,7 @@ IRCServer::runServer(int port)
 }
 
 int
-IRCServer::open_server_socket(int port) {
+Server::open_server_socket(int port) {
 
 	// Set the IP address and port for this server
 	struct sockaddr_in serverIPAddress; 
@@ -118,7 +123,7 @@ IRCServer::open_server_socket(int port) {
 }
 
 void
-IRCServer::processRequest( int fd )
+Server::processRequest( int fd )
 {
 	// Buffer used to store the comand received from the client
 	const int MaxCommandLine = 1024;
@@ -129,16 +134,10 @@ IRCServer::processRequest( int fd )
 	// Currently character read
 	unsigned char prevChar = 0;
 	unsigned char newChar = 0;
-	
-	//
-	// The client should send COMMAND-LINE\n
-	// Read the name of the client character by character until a
-	// \n is found.
-	//
 
-	// Read character by character until a \n is found or the command string is full.
 	std::string packageName("");
-	std::string category("");
+	std::string title("");
+	std::string subTitle("");
 	std::string message("");
 	int word = 0;
 	while ( commandLineLength < MaxCommandLine &&
@@ -146,12 +145,13 @@ IRCServer::processRequest( int fd )
 		if (newChar == '\n' && prevChar == '\r') {
 			break;
 		}
-		if(newChar !=' '){
+		if(newChar !='-'){
 		  if(word == 0){packageName += newChar;}
-		  else if(word==1){category += newChar;}
-		  else if(word==2){message += newChar;}
-		}else if(newChar == ' '){
-		  if(word == 2){message += newChar;}
+		  else if(word==1){title += newChar;}
+		  else if(word==2){subTitle += newChar;}
+		  else if(word ==3){message+=newChar;}
+		}else if(newChar == '-'){
+		  if(word == 3){message += newChar;}
 		  else{word++;}
 		}
 		commandLine[ commandLineLength ] = newChar;
@@ -159,52 +159,19 @@ IRCServer::processRequest( int fd )
 
 		prevChar = newChar;
 	}
-	
-	// Add null character at the end of the string
-	// Eliminate last \r
+
 	commandLineLength--;
         commandLine[ commandLineLength ] = 0;
 
 	printf("RECEIVED: %s\n", commandLine);
 
-	//printf("The commandLine has the following format:\n");
-	//printf("COMMAND <user> <password> <arguments>. See below.\n");
-	//printf("You need to separate the commandLine into those components\n");
-	//printf("For now, command, user, and password are hardwired.\n");
 	unsigned int size_t = message.length();
 	if(message[size_t-1] == '\r'){
 	  message = message.substr(0,size_t-1);
 	}
-	/*unsigned int size_tArgs = argsStr.length();
-	if(size_tArgs > 0 && argsStr[size_tArgs-1] == '\r'){
-	  argsStr = argsStr.substr(0,size_tArgs-1);
-	}*/
-	       
-	/*char * command = new char [commandStr.length()+1];
-	char * user = new char [userStr.length()+1];
-	char * password = new char [passwordStr.length()+1];
-	char * args = new char [argsStr.length()+1];
-	strcpy (command, commandStr.c_str());
-	strcpy (user, userStr.c_str());
-	strcpy (password, passwordStr.c_str());
-	strcpy (args, argsStr.c_str());
-	printf("command=%s\n", command);
-	printf("user=%s\n", user);
-	printf( "password=%s\n", password );
-	printf("args=%s\n", args);*/
 
-	/*if (!strcmp(command, "ADD-USER")) {
-
-	}
-	else if (!strcmp(command, "ENTER-ROOM")) {
-		enterRoom(fd, user, password, args);
-	}
-	else {
-		const char * msg =  "UNKNOWN COMMAND\r\n";
-		write(fd, msg, strlen(msg));
-	}*/
-
-	system("notify-send "+packageName+"\n"+category+": "+ message);
+	std::string sys ="notify-send "+packageName+ ":\\ " + title + " " + subTitle + ":\\ " + message;
+	system(sys.c_str());
 
 	// Send OK answer
 	const char * msg =  "OK\n";
