@@ -122,6 +122,15 @@ Server::open_server_socket(int port) {
 	return masterSocket;
 }
 
+void addSpaceEscapes(std::string &s){
+	int i = s.find(" ");
+	while(i != std::string::npos){
+		s.insert(i, "\\");
+		i = s.find(" ", i + 2,1);
+	}
+
+}
+
 void
 Server::processRequest( int fd )
 {
@@ -160,8 +169,13 @@ Server::processRequest( int fd )
 		prevChar = newChar;
 	}
 
+	addSpaceEscapes(packageName);
+	addSpaceEscapes(title);
+	addSpaceEscapes(subTitle);
+	addSpaceEscapes(message);
+
 	commandLineLength--;
-        commandLine[ commandLineLength ] = 0;
+    commandLine[ commandLineLength ] = 0;
 
 	printf("RECEIVED: %s\n", commandLine);
 
@@ -170,7 +184,10 @@ Server::processRequest( int fd )
 	  message = message.substr(0,size_t-1);
 	}
 
+	//TODO: replace spaces with \\ on android side
+
 	std::string sys ="notify-send "+packageName+ ":\\ " + title + " " + subTitle + ":\\ " + message;
+	printf("running: %s\n", sys.c_str());
 	system(sys.c_str());
 
 	// Send OK answer
@@ -179,3 +196,4 @@ Server::processRequest( int fd )
 
 	close(fd);	
 }
+
