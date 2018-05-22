@@ -1,0 +1,22 @@
+{
+  "name": "linmirror-firebase",
+  "version": "1.0.0",
+  "description": "firebaseLinmirror package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaqer1/LinMirrorServer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shaqer1/LinMirrorServer/issues"
+  },
+  "homepage": "https://github.com/shaqer1/LinMirrorServer#readme",
+  "dependencies": {
+    "firebase": "^5.0.3"
+  }
+}
