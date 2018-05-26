@@ -3,6 +3,8 @@ const admin = require('firebase');
 var exec = require('child_process').exec;
 
 
+var currentUser;
+
 admin.initializeApp({
   apiKey: "AIzaSyBH_bhUqNwxTsWHu202ecy7zkPD5SFVmtE",
     authDomain: "linmirror-bd427.firebaseapp.com",
@@ -15,44 +17,57 @@ const db = admin.firestore();
 const settings = { timestampsInSnapshots: true};
 db.settings(settings);
 
-/*
-var addDoc = db.collection('notifications').add({
-  packageName: 'Hi',
-  text:'bye',
-  tickerText: 'ticker',
-  title: 'test'
-}).then(ref =>{
-  console.log('Added doc', ref.id);
-})
-*/
-var ref = admin.database().ref('notifications');
-var now = Date.now();
-var cutoff = now - 2 * 60 * 60 * 1000;
-var old = ref.orderByChild('timestamp').endAt(cutoff).limitToLast(1);
-var listener = old.on('child_added', function(snapshot) {
-    snapshot.ref.remove();
-});
 
-var query = db.collection('notifications').where('timestamp', '>=', new Date(new Date().getTime()-10000))
-              .orderBy('timestamp', 'desc')/*.limit(1)*/;//doc('hi');
 
-var title = 'null';
-var observer = query.onSnapshot(function(querySnapshot) {
-  console.log(`Received doc snapshot: ${querySnapshot.size}`);
-  //var doc = querySnapshot.getChildren().iterator().next();
-  var doc = querySnapshot.docs[0];
-    if(doc != null){
+
+admin.auth().signInWithEmailAndPassword('shafayhaq123@hotmail.com', 'Shahmir1234')
+ .catch(function(err) {
+   console.log(err, 'auth error');
+ });
+
+ currentUser = admin.auth().currentUser;
+
+ admin.auth().onAuthStateChanged(function(user) {
+  currentUser = user; // user is undefined if no user signed in
+  console.log(user.uid);
+  console.log('before auth');
+  if(currentUser != null){
+    console.log('user authenticated');
+    var ref = admin.database().ref('/' + 
+        user.uid + '/userNotifications/notifications');
+    var now = Date.now();
+    var cutoff = now - 2 * 60 * 60 * 1000;
+    var old = ref.orderByChild('timestamp').endAt(cutoff).limitToLast(1);
+    var listener = old.on('child_added', function(snapshot) {
+        snapshot.ref.remove();
+    });
+    var query = db.collection('/' + 
+        user.uid + '/userNotifications/notifications').where('timestamp', '>=', new Date(new Date().getTime()-10000))
+                  .orderBy('timestamp', 'desc')/*.limit(1)*/;//doc('hi');
+
+    var title = 'null';
+    var observer = query.onSnapshot(function(querySnapshot) {
+      console.log(`Received doc snapshot: ${querySnapshot.size}`);
+      //var doc = querySnapshot.getChildren().iterator().next();
       console.log('recieved new');
-      console.log(doc.data().packageName + ':\\ ' + doc.data().title + ' ' + doc.data().tickerText + ':\\ ' + doc.data().text);
-      exec('notify-send '
-      + doc.data().packageName + ':\\ ' + doc.data().title + ' ' + doc.data().tickerText + ':\\ ' + doc.data().text
-      , function(err, stdout, stderr){
-        console.log(stdout);
-      });
-    }
+      var doc = querySnapshot.docs[0];
+        if(doc != null){
+          console.log(doc.data().packageName + ':\\ ' + doc.data().title + ' ' + doc.data().tickerText + ':\\ ' + doc.data().text);
+          exec('notify-send '
+          + doc.data().packageName + ':\\ ' + doc.data().title + ' ' + doc.data().tickerText + ':\\ ' + doc.data().text
+          , function(err, stdout, stderr){
+            console.log(stdout);
+          });
+        }
 
-}, err => {
-  console.log(err);
-});
+    }, err => {
+      console.log(err);
+    });
 
-console.log('title',title);
+    console.log('title',title);
+  }
+  console.log('after auth')
+ });
+
+
+

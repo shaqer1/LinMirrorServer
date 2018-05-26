@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/shaqer1/LinMirrorServer#readme",
   "dependencies": {
-    "firebase": "^5.0.3"
+    "firebase": "^5.0.3",
+    "firebaseui": "^3.0.0"
   }
 }
