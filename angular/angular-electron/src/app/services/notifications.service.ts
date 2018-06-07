@@ -23,7 +23,7 @@ export class NotificationsService {
     this.notificationsCollection = this.afs.collection(uid).doc('userNotifications')
       .collection('notifications', ref =>
       {
-        return ref/* .where('timestamp', '>=', new Date(new Date().getTime()-10000)) */
+        return ref.where('timestamp', '>=', new Date(new Date().getTime()-10000))
                 .orderBy('timestamp', 'desc')
         
       });
