@@ -1,4 +1,12 @@
 node_modules/
 linmirror-bd427-firebase-adminsdk-l6jnh-0e1179b944.json
 package.json
+.vscode/
 package-lock.json
+/app/
+/icons/
+/index.html
+/index.js
+/main.js
+/windows/
+/pages/

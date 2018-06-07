@@ -1,0 +1,19 @@
+<main class="content">
+  <title>
+    <h1>LinMirror</h1>
+  </title>    
+
+  <div *ngIf="auth.user | async; then authenticated else guest">
+    <!-- template will replace this div -->
+  </div>
+  <div>
+    <ng-template #authenticated>
+      
+    </ng-template>
+
+    <ng-template #guest>
+    <app-user-login></app-user-login>
+    </ng-template>
+  </div>
+
+</main>
