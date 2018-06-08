@@ -7,8 +7,8 @@ import { AuthService } from './core/auth.service';
 import { RoundProgressModule } from 'angular-svg-round-progressbar'; // <-- here
 
 import { AppComponent } from './app.component';
-import { UserLoginComponent } from './users/user-login/user-login.component';
-import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { UserLoginComponent } from './components/users/user-login/user-login.component';
+import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
 
 
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
@@ -22,6 +22,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
 import { environment } from '../environments/environment.prod';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AppRoutingModule } from './/app-routing.module';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 
 
@@ -29,7 +31,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
   declarations: [
     AppComponent,
     UserLoginComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     /* AngularFirestore, */
     AngularFirestoreModule,
     ReactiveFormsModule,
-    FormsModule 
+    FormsModule,
+    AppRoutingModule 
   ],
   providers: [
     AuthService,

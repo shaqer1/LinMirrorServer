@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../../core/auth.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NotificationsService } from '../../services/notifications.service';
-import { NotificationObject } from '../../Models/NotificationObject';
+import { NotificationsService } from '../../../services/notifications.service';
+import { NotificationObject } from '../../../Models/NotificationObject';
+import { Router } from '@angular/router';
 
 interface User {
   uid: string;
@@ -24,7 +25,8 @@ export class UserLoginComponent implements OnInit {
   newUser: boolean = false;
   constructor(private fb: FormBuilder, 
     public auth: AuthService,
-    private ns: NotificationsService) { 
+    private ns: NotificationsService,
+    private router: Router) { 
     //this.getComments();
   }
 
@@ -44,10 +46,13 @@ export class UserLoginComponent implements OnInit {
         this.ns.getNotifications(user.user.uid)
         .subscribe((notification: NotificationObject[]) => {
           console.log(notification[0]);
+          if(notification[0] != null){
             new Notification(notification[0].packageName + ': ' + notification[0].title ,{
                 body: notification[0].tickerText + ': ' + notification[0].text
-            })
+            });
+          }
         });
+        this.router.navigate(['notifications']);
        }
      )
    }
