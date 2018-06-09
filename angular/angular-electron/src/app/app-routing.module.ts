@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserLoginComponent } from './components/users/user-login/user-login.component';
 import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { AuthGuard } from './core/auth.guard';
 
 
 
@@ -15,8 +16,8 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    component: UserProfileComponent/* ,
-    canActivate: [AuthGuard] */
+    component: UserProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     // Default route
@@ -26,8 +27,8 @@ const routes: Routes = [
   },
   {
      path: 'notifications',
-     component: NotificationsComponent
-     //,canActivate: [AuthGuard] for comps which require auth
+     component: NotificationsComponent,
+     canActivate: [AuthGuard] //for comps which require auth
   },
   {
     // Wildcard route

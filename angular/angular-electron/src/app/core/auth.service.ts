@@ -49,6 +49,16 @@ export class AuthService {
             })
   }
 
+  // Returns true if user is logged in
+  get authenticated(): boolean {
+    return this.afAuth.authState !== null;
+  }
+
+  get currentUserObservable(): any {
+    return this.afAuth.auth
+  }
+  
+
   ////// OAuth Methods /////
   googleLogin() {
     const provider = new auth.GoogleAuthProvider();

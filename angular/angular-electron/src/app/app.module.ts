@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AuthService } from './core/auth.service';
 
 
-import { RoundProgressModule } from 'angular-svg-round-progressbar'; // <-- here
 
 import { AppComponent } from './app.component';
 import { UserLoginComponent } from './components/users/user-login/user-login.component';
@@ -14,7 +13,6 @@ import { UserProfileComponent } from './components/users/user-profile/user-profi
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 
-//import {AuthGuard} from './core/auth.guard';
 import {NotifyService} from './core/notify.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -24,6 +22,7 @@ import { environment } from '../environments/environment.prod';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AppRoutingModule } from './/app-routing.module';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { AuthGuard } from './core/auth.guard';
 
 
 
@@ -46,6 +45,7 @@ import { NotificationsComponent } from './components/notifications/notifications
   ],
   providers: [
     AuthService,
+    AuthGuard,
     NotifyService
   ],
   bootstrap: [AppComponent]
