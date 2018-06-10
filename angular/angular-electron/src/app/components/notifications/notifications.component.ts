@@ -13,7 +13,7 @@ export class NotificationsComponent implements OnInit {
   constructor(private auth: AuthService,
     public ns: NotificationsService
   ) { 
-    this.ns.getNotifications(this.auth.currentUser.uid)
+    this.ns.getNotificationsFromHour(this.auth.currentUser.uid, 1)
     .subscribe(
       notifications => {
         console.log(notifications.toString);

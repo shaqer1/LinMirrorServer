@@ -18,13 +18,19 @@ export class NotificationsService {
     /* private as: AuthService */) {
 
    }
-   getNotifications(uid: string): Observable<NotificationObject[]> {
+   getNotificationsFromHour(uid: string, hours: number): Observable<NotificationObject[]> {
+     return this.getNotifications(uid, new Date(new Date().getTime()-(hours*60*60*1000)))
+   }
+   getCurrentNotifications(uid: string): Observable<NotificationObject[]> {
+     return this.getNotifications(uid, new Date(new Date().getTime()-(10*1000)))
+   }
+   getNotifications(uid: string, time: Date): Observable<NotificationObject[]> {
     //console.log(id);
     this.notificationsCollection = this.afs.collection(uid).doc('userNotifications')
       .collection('notifications', ref =>
       {
         return ref
-                .where('timestamp', '>=', new Date(new Date().getTime()-(60*60*1000)))
+                .where('timestamp', '>=', time)
                 .orderBy('timestamp', 'desc')
         
       });

@@ -43,7 +43,7 @@ export class UserLoginComponent implements OnInit {
      this.auth.emailLogin(this.userForm.value).then(
        (user) =>{
         console.log(user.user.uid); 
-        this.ns.getNotifications(user.user.uid)
+        this.ns.getCurrentNotifications(user.user.uid)
         .subscribe((notification: NotificationObject[]) => {
           console.log(notification[0]);
           if(notification[0] != null){
