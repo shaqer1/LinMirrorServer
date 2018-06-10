@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/internal/Observable';
 export class NotificationsService {
 
   notificationsCollection: AngularFirestoreCollection<NotificationObject>;
-  notifications: Observable<NotificationObject[]>;
+  public notifications: Observable<NotificationObject[]>;
   //uid: string;
   constructor(private afs: AngularFirestore, 
     /* private as: AuthService */) {
@@ -23,7 +23,8 @@ export class NotificationsService {
     this.notificationsCollection = this.afs.collection(uid).doc('userNotifications')
       .collection('notifications', ref =>
       {
-        return ref.where('timestamp', '>=', new Date(new Date().getTime()-10000))
+        return ref
+                .where('timestamp', '>=', new Date(new Date().getTime()-(60*60*1000)))
                 .orderBy('timestamp', 'desc')
         
       });

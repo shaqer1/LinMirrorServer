@@ -32,12 +32,16 @@ export class AuthService {
 
   user: /* Observable<User | null> */Promise<void>;
   userDB: User;
+  authState: any = null;
   //private pendingUser = new BehaviorSubject<string>('dsfsd');
   //name = this.pendingUser.asObservable();
 
   constructor(private afAuth: AngularFireAuth,
               private afs: AngularFirestore,
               private notify: NotifyService) {
+                this.afAuth.authState.subscribe((auth) => {
+                  this.authState = auth
+                });
 
             this.user = this.afAuth.authState
             .forEach(user => {
@@ -58,6 +62,10 @@ export class AuthService {
     return this.afAuth.auth
   }
   
+  // Returns current user data
+  get currentUser(): any {
+    return this.authenticated ? this.authState : null;
+  }
 
   ////// OAuth Methods /////
   googleLogin() {

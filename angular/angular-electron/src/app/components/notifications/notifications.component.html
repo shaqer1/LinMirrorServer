@@ -1,3 +1,22 @@
-<p>
-  notifications works!
-</p>
+<div>
+
+  <h2>Notifications below!</h2>
+  <div *ngIf="(ns.notifications | async)?.length==0">
+    <div class="labels">
+      No notifications found :( 
+
+    </div>
+    <br />
+    <br />
+  </div>
+  <div *ngIf="(ns.notifications | async)?.length!=0">
+   
+    <ul class="notifs">
+      <li *ngFor="let notification of notifs">
+        <strong>{{ notification.packageName }} : {{ notification.title}}</strong>
+        <br />
+        {{ notification.tickerText }} : {{ notification.text }}
+      </li>
+    </ul>
+  </div>
+</div>
