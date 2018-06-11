@@ -2,13 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>AngularElectron</title>
+  <title>LinMirror</title>
   <base href="./">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script type='text/javascript'>
+    // In such way we connect ipcRenderer to our page.
+    window.ipcRenderer = require('electron').ipcRenderer;
+    // The ipcRenderer module provides a few methods so you can send events from the render process (web page) to the main process.
+  </script>
 </head>
 <body>
+  <header style='-webkit-app-region: no-drag'>
+    <button id='close-button'>X</button>
+  </header>
   <app-root></app-root>
+
+    <script type='text/javascript'>
+      // On click we should send event to close window.
+      document.getElementById("close-button").addEventListener("click", function (e) {
+        ipcRenderer.send('minimize-app');
+      });
+    </script>
 </body>
 </html>

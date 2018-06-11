@@ -4,12 +4,33 @@ const electron = require('electron');
 const {ipcMain, app} = electron;
 const TrayWindow  = require('./windows/TrayWindow');
 const TrayIcon = require('./js/TrayIcon');
+
+const Positioner = require('electron-positioner');
+
 let win;
 
-function createWindow () {
+function createWindow (app ) {
   // Create the browser window.
   tray = new TrayWindow();
-  trayIcon = new TrayIcon(tray.window);
+  
+  openAppIcon = new TrayIcon(tray.window/* ,'open app', (e, bounds) => {
+    if ( tray.window.isVisible() ) {
+      tray.window.hide();
+    } else {
+      let positioner = new Positioner(tray.window);
+      positioner.move('trayCenter', bounds);
+      tray.window.show();
+    }
+  } */);
+
+  /* exitAppIcon = new TrayIcon('exit', (e, bounds) => {
+    tray.window.close();
+    app.quit();
+  }); */
+
+
+
+  //openAppIcon.on('click', );
  /*  win = new BrowserWindow({
     width: 600, 
     height: 600,
@@ -33,9 +54,9 @@ function createWindow () {
 // Create window on electron intialization
 app.on('ready', createWindow)
 
-ipcMain.on('quit-app', function() {
-  tray.window.close(); // Standart Event of the BrowserWindow object.
-  app.quit(); // Standart event of the app - that will close our app.
+ipcMain.on('minimize-app', function() {
+  tray.window.hide(); // Standart Event of the BrowserWindow object.
+ // app.quit(); // Standart event of the app - that will close our app.
 });
 ipcMain.on('update-title-tray-window-event', function(event, title) {
   
