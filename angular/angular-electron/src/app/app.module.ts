@@ -16,6 +16,11 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import {NotifyService} from './core/notify.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import {MatButtonModule, MatInputModule, MatListModule, MatCardModule} from '@angular/material';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
 import { environment } from '../environments/environment.prod';
@@ -37,6 +42,11 @@ import { AuthGuard } from './core/auth.guard';
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),  // Add this
     AngularFireAuthModule,
+    MatButtonModule, 
+    MatCardModule,
+    MatListModule,
+    BrowserAnimationsModule,
+    MatInputModule,
     /* AngularFirestore, */
     AngularFirestoreModule,
     ReactiveFormsModule,
@@ -48,6 +58,7 @@ import { AuthGuard } from './core/auth.guard';
     AuthGuard,
     NotifyService
   ],
+  exports: [MatButtonModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

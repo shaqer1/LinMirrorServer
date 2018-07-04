@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "angular-electron"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}

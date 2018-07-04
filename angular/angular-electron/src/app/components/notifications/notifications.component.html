@@ -1,22 +1,35 @@
 <div>
 
   <h2>Notifications below!</h2>
+  
   <div *ngIf="(ns.notifications | async)?.length==0">
     <div class="labels">
-      No notifications found :( 
+        <mat-list>
+        <mat-list-item >
+            <h4 mat-line>No notifications found :( </h4>
+            </mat-list-item>
+          </mat-list>
 
     </div>
     <br />
     <br />
   </div>
   <div *ngIf="(ns.notifications | async)?.length!=0">
-   
-    <ul class="notifs">
-      <li *ngFor="let notification of notifs">
-        <strong>{{ notification.packageName }} : {{ notification.title}}</strong>
-        <br />
-        {{ notification.tickerText }} : {{ notification.text }}
-      </li>
-    </ul>
-  </div>
+    <mat-card class="card" *ngFor="let notification of notifs">
+        <mat-card-header>
+          <!-- <div mat-card-avatar class="example-header-image"></div> -->
+          <mat-card-title>{{ notification.packageName }}</mat-card-title>
+          <mat-card-subtitle>{{ notification.title}}</mat-card-subtitle>
+        </mat-card-header>
+    <!--               <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+        <mat-card-content>
+            <p>{{ notification.tickerText }} <br /> {{ notification.text }}</p>
+        </mat-card-content>
+        <!--  <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions> -->
+      </mat-card>
+       
+   </div>
 </div>

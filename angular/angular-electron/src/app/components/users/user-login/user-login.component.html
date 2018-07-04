@@ -4,24 +4,28 @@
     </div>
     <div>
       <ng-template #guest>
-        <form [formGroup]="userForm" *ngIf ="!newUser">
+        <form [formGroup]="userForm" *ngIf ="!newUser"  min-width="150px" max-width="500px" width="100%">
   
-          <label for="email">Email:
-            <input placeholder="Enter your Email..." class="login-comp"
+          <mat-form-field>
+            <input matInput placeholder="Email" class="login-comp"
               type="email" formControlName="email" required>
-          </label>
+          </mat-form-field>
+
+          <br />
   
-          <label>Password:
-            <input type="password" placeholder="Enter your Password.."
+          <mat-form-field>
+            <input matInput type="password" placeholder="Password"
             class="login-comp"
              formControlName="password" required >
-          </label>
-  
-          <button class="button" (click)="login()"  [disabled]="!userForm.valid"
+          </mat-form-field>
+          
+          <br />
+
+          <button mat-stroked-button color="primary" class="button" (click)="login()"  [disabled]="!userForm.valid"
           >login!</button>
   
-  
-          <button float="left" (click)="auth.googleLogin()" class="button">
+          
+          <button mat-stroked-button color="primary" float="left" (click)="auth.googleLogin()" class="button">
             <i class="fa fa-google"></i> Connect Google
           </button>
   
@@ -33,29 +37,35 @@
          </div>
   
           <br />
+
           <a (click)="toggleForm()"><u>Sign Up!</u></a>
   
         </form>
+
         <form  [formGroup]="signupForm" *ngIf="newUser">
-          <label for="username">Username:
-            <input placeholder="Enter your Username..." class="login-comp"
+          <mat-form-field>
+            <input matInput placeholder="Username" class="login-comp"
               type="username" formControlName="displayName" required>
-          </label>
-          <label for="photoURL">photoURL:
-            <input placeholder="Enter your PhotoUrl..." class="login-comp"
-              type="photoURL" formControlName="photoURL">
-          </label>
+          </mat-form-field>
           <br />
-          <label for="email">Email:
-            <input placeholder="Enter your Email..." class="login-comp"
-              type="email" formControlName="email" required>
-          </label>
-  
-          <label>Password:
-            <input type="password" placeholder="Enter your Password.."
+
+          <mat-form-field>
+            <input matInput placeholder="PhotoUrl" class="login-comp"
+              type="photoURL" formControlName="photoURL">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field>
+            <input matInput placeholder="Email" class="login-comp"
+                type="email" formControlName="email" required>
+          </mat-form-field>
+          <br />
+
+          <mat-form-field>
+            <input matInput type="password" placeholder="Password"
             class="login-comp"
              formControlName="password" required >
-          </label>
+          </mat-form-field>
   
           <br />
   
@@ -65,13 +75,14 @@
           <div display='block' *ngIf="formErrors.email">
            {{ formErrors.email }}
          </div>
-         <button class="button" (click)="signup()"
+         <button mat-stroked-button color="primary" class="button" (click)="signup()"
          >Sign Up!</button>
   
-         <button float="left" (click)="auth.googleLogin()" class="button">
+         <button mat-stroked-button color="primary" float="left" (click)="auth.googleLogin()" class="button">
            <i class="fa fa-google"></i> Connect Google
          </button>
-  
+         <br />
+
           <a (click)="toggleForm()"><u>Already Regitered!</u></a>
         </form>
   
