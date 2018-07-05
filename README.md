@@ -14,7 +14,7 @@
  
 [link to android code](https://github.com/shaqer1/LinMirror)
 
-## Screenshots
+## Screenshots (coming soon)
 
 ## Install
 
