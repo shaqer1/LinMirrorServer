@@ -7,10 +7,14 @@
 - view/send/reply to text messages
 - reply to messages in other apps
 - mirror actions on notifications as well
+- page to manage profile
+- user fragment on screen 
 
-This app uses firebase as a backend database and runs the desktop app in electron and angularJS. 
+#### This app uses firebase as a backend database and runs the desktop app in electron and angularJS. 
  
 [link to android code](https://github.com/shaqer1/LinMirror)
+
+## Screenshots
 
 ## Install
 
