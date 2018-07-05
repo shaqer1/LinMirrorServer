@@ -1,0 +1,33 @@
+{
+  "name": "linmirror",
+  "version": "0.1.0",
+  "main": "./js/index.js",
+  "scripts": {
+    "start": "electron ./js/index.js"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^1.4.13"
+  },
+  "dependencies": {
+    "@angular/cli": "^6.0.7",
+    "browser-window": "^0.4.0",
+    "electron-positioner": "^3.0.0",
+    "firebase": "^5.0.4",
+    "firebase-tools": "^3.18.5",
+    "grpc": "^1.12.2"
+  },
+  "description": "try2 of linmirror",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaqer1/LinMirrorServer.git"
+  },
+  "keywords": [
+    "hi"
+  ],
+  "author": "shaqer1",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shaqer1/LinMirrorServer/issues"
+  },
+  "homepage": "https://github.com/shaqer1/LinMirrorServer#readme"
+}

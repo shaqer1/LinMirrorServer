@@ -18,12 +18,12 @@
     <mat-card class="card" *ngFor="let notification of notifs">
         <mat-card-header>
           <!-- <div mat-card-avatar class="example-header-image"></div> -->
-          <mat-card-title>{{ notification.packageName }}</mat-card-title>
-          <mat-card-subtitle>{{ notification.title}}</mat-card-subtitle>
+          <mat-card-title>{{ notification.packageName }}</mat-card-title><!-- <span ng-non-bindable> | date:"H:m:s dd/MMM/yyyy" </span> -->
+          <mat-card-subtitle>{{ notification.timestamp}}</mat-card-subtitle>
         </mat-card-header>
     <!--               <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
         <mat-card-content>
-            <p>{{ notification.tickerText }} <br /> {{ notification.text }}</p>
+            <p>{{ notification.title }} <br /> {{ notification.text }}</p>
         </mat-card-content>
         <!--  <mat-card-actions>
           <button mat-button>LIKE</button>

@@ -2,6 +2,6 @@ export class NotificationObject {
   packageName: string;
   text:  string;
   tickerText: string;
-  //timestamp: Date;
+  timestamp: Date;
   title: string;
 }
