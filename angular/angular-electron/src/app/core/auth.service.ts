@@ -1,24 +1,14 @@
 import { Injectable } from '@angular/core';
 import { auth } from 'firebase';
 
-//import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestoreDocument } from 'angularfire2/firestore';
 import {AngularFirestore} from 'angularfire2/firestore';
 import { NotifyService } from './notify.service';
 
 import { of } from 'rxjs';
-/* import { switchMap } from 'rxjs/operators';
-import 'rxjs/add/operator/switchMap'; */
-
-
-
-//import 'rxjs/add/operator/toPromise';
-//import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
 
 import { EmailPasswordCredentials } from '../Models/EmailPasswordCredentials';
-//import { FirebaseAuth } from '@firebase/auth-types';
 
 interface User {
   uid: string;
