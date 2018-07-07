@@ -2,7 +2,7 @@
 
 ### This app mirrors notifications from your android, _ios comming soon_, phone to your Windows/Linux/Mac PC, running node. 
 
-## Comming soon
+## Coming soon
 - Screen mirroring feature
 - view/send/reply to text messages
 - reply to messages in other apps
