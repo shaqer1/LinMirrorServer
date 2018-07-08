@@ -23,7 +23,6 @@ export class AuthService {
 
   constructor(public afAuth: AngularFireAuth,
               private afs: AngularFirestore,
-              private af: AngularFireModule,
               private router: Router,
               private notify: NotifyService) {
                 this.afAuth.authState.subscribe((auth) => {
