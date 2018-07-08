@@ -3,6 +3,29 @@
     margin-bottom: 10px;
     background-color: rgba(205, 205, 205, 0.45);
   }
+
+  button{
+    position: relative;
+    border-radius: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .profile{
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: #f00;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 17px;
+    right: 0;
+  }
+
+.profile:hover {
+    background-color: rgb(255, 129, 129);
+    color: black;
+}
   
   .header {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');

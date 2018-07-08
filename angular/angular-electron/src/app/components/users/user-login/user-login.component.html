@@ -1,10 +1,6 @@
 <div>
-    <div *ngIf="auth.user | async; then authenticated else guest">
-            <!-- template will replace this div -->
-    </div>
-    <div>
-      <ng-template #guest>
-        <form [formGroup]="userForm" *ngIf ="!newUser"  min-width="150px" max-width="500px" width="100%">
+    <div >
+        <form [formGroup]="userForm" *ngIf ="!newUser"  min-width="150px" max-width="800px" width="100%">
   
           <mat-form-field>
             <input matInput placeholder="Email" class="login-comp"
@@ -85,16 +81,5 @@
 
           <a (click)="toggleForm()"><u>Already Regitered!</u></a>
         </form>
-  
-      </ng-template>
-      <ng-template #authenticated>
-          <div *ngIf="auth.user | async as user" display="block">
-              <a>{{ user.displayName }}</a><br />
-              <div display="inline-block">
-                <img  [src]="user.photoURL" height="60px">
-                <button (click)="auth.signOut()" vertical-align="middle">Logout</button>
-              </div>
-          </div>
-      </ng-template>
     </div>
   </div>

@@ -1,55 +1,49 @@
+import { UserObj } from '../components/users/User';
+
 import { Injectable } from '@angular/core';
 import { auth } from 'firebase';
+import { Router } from '@angular/router';
 
+import { User } from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestoreDocument } from 'angularfire2/firestore';
 import {AngularFirestore} from 'angularfire2/firestore';
 import { NotifyService } from './notify.service';
 
-import { of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { EmailPasswordCredentials } from '../Models/EmailPasswordCredentials';
-
-interface User {
-  uid: string;
-  email?: string | null;
-  photoURL?: string;
-  displayName?: string;
-}
+import { AngularFireModule } from 'angularfire2';
 
 @Injectable()
 export class AuthService {
-
-  user: /* Observable<User | null> */Promise<void>;
-  userDB: User;
+  user: Observable<UserObj |null>;
+  userDB: UserObj;
   authState: any = null;
-  //private pendingUser = new BehaviorSubject<string>('dsfsd');
-  //name = this.pendingUser.asObservable();
 
-  constructor(private afAuth: AngularFireAuth,
+  constructor(public afAuth: AngularFireAuth,
               private afs: AngularFirestore,
+              private af: AngularFireModule,
+              private router: Router,
               private notify: NotifyService) {
                 this.afAuth.authState.subscribe((auth) => {
                   this.authState = auth
                 });
 
-            this.user = this.afAuth.authState
-            .forEach(user => {
+            this.afAuth.authState.subscribe(user => {
               if (user) {
-                return this.afs.doc<User>(`${user.uid}/userInfo`).valueChanges()
-              } else {
-                return of(null)
+                this. user = this.afs.doc<UserObj>(`${user.uid}/userInfo`).valueChanges()
               }
             })
   }
 
   // Returns true if user is logged in
   get authenticated(): boolean {
-    return this.afAuth.authState !== null;
+    return this.afAuth.authState != null;
   }
 
-  get currentUserObservable(): any {
-    return this.afAuth.auth
+  get currentUserObservable(): Observable<User | null> {
+    return this.afAuth.authState
   }
   
   // Returns current user data
@@ -153,8 +147,9 @@ export class AuthService {
   signOut() {
     console.log('here');
     this.afAuth.auth.signOut().then(() => {
-        //this.router.navigate(['/search']);
+        this.router.navigate(['/login']);
     });
+    console.log('here');
   }
 
   // If error, console log and notify user
@@ -164,13 +159,13 @@ export class AuthService {
   }
 
   // Sets user data to firestore after succesful login
-  private updateUserData(user: User):Promise<any> {
+  private updateUserData(user: UserObj):Promise<any> {
     console.log(user);
     console.log(user.uid); 
     //console.log(user.user.uid);
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`${user.uid}/userInfo`);
+    const userRef: AngularFirestoreDocument<UserObj> = this.afs.doc(`${user.uid}/userInfo`);
     
-    const data: User = {
+    const data: UserObj = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName || this.username || 'nameless user',

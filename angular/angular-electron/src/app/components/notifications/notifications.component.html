@@ -1,4 +1,12 @@
 <div>
+  <div class="profile" *ngIf="auth.user | async as user" display="block">
+    <a>{{ user.displayName }}</a><br />
+    <div display="block">
+      <img  [src]="user.photoURL" height="60px">
+      <br />
+      <button (click)="auth.signOut()" vertical-align="middle">Logout</button>
+    </div>
+  </div>
 
   <h2>Notifications below!</h2>
   

@@ -10,15 +10,15 @@ import { NotificationsService } from '../../services/notifications.service';
 export class NotificationsComponent implements OnInit {
   private notifs;
 
-  constructor(private auth: AuthService,
+  constructor(public auth: AuthService,
     public ns: NotificationsService
   ) { 
     this.ns.getNotificationsFromHour(this.auth.currentUser.uid, 1)
     .subscribe(
       notifications => {
-        console.log(notifications.toString);
+         console.log(notifications.toString);
         console.log(ns.notifications);
-        this.notifs = notifications;
+        this.notifs = notifications; 
       });
   }
 
