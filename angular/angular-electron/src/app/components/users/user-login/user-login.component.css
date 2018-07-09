@@ -1,0 +1,16 @@
+.login {
+    background-color: lightblue;
+    color: black;
+    border-radius: 25px;
+    padding: 50px 25px 50px 25px;
+    width: 27%; 
+    height: 55%; 
+    width: 280px;
+    min-height: 280px;
+    margin: 20% auto;
+    display: flex;
+    flex-direction: column;
+}
+.mat-form-field.mat-form-field {
+    width: 100%;
+  }

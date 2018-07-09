@@ -35,11 +35,24 @@ export class UserLoginComponent implements OnInit {
    }
 
    signup(): void {
-     this.auth.emailSignUp(this.signupForm.value)
+     this.auth.emailSignUp(this.signupForm.value).then(
+      (user) =>{
+       console.log(user.user.uid); 
+       this.ns.getCurrentNotifications(user.user.uid)
+       .subscribe((notification: NotificationObject[]) => {
+         console.log(notification[0]);
+         if(notification[0] != null){
+           new Notification(notification[0].packageName + ': ' + notification[0].title ,{
+               body: notification[0].tickerText + ': ' + notification[0].text
+           });
+         }
+       });
+       this.router.navigate(['notifications']);
+      }
+    )
    }
 
    login(): void {
-     console.log('here');
      this.auth.emailLogin(this.userForm.value).then(
        (user) =>{
         console.log(user.user.uid); 
@@ -55,6 +68,23 @@ export class UserLoginComponent implements OnInit {
         this.router.navigate(['notifications']);
        }
      )
+   }
+   googleLogin(): void {
+    this.auth.googleLogin().then(
+      (user) =>{
+       console.log(user.user.uid); 
+       this.ns.getCurrentNotifications(user.user.uid)
+       .subscribe((notification: NotificationObject[]) => {
+         console.log(notification[0]);
+         if(notification[0] != null){
+           new Notification(notification[0].packageName + ': ' + notification[0].title ,{
+               body: notification[0].tickerText + ': ' + notification[0].text
+           });
+         }
+       });
+       this.router.navigate(['notifications']);
+      }
+    )
    }
    toggleForm(): void {
      this.newUser = !this.newUser;

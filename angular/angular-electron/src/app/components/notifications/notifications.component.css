@@ -1,5 +1,4 @@
 .card {
-    max-width: 400px;
     margin-bottom: 10px;
     background-color: rgba(205, 205, 205, 0.45);
   }
@@ -19,7 +18,6 @@
     text-align: center;
     padding: 5px;
     font-size: 17px;
-    right: 0;
   }
 
 .profile:hover {

@@ -13,7 +13,6 @@ import { NotifyService } from './notify.service';
 import { Observable } from 'rxjs';
 
 import { EmailPasswordCredentials } from '../Models/EmailPasswordCredentials';
-import { AngularFireModule } from 'angularfire2';
 
 @Injectable()
 export class AuthService {
@@ -71,11 +70,14 @@ export class AuthService {
     return this.oAuthLogin(provider);
   }
 
-  private oAuthLogin(provider: auth.AuthProvider) {
+  private oAuthLogin(provider: auth.AuthProvider) :Promise<any> {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
+        console.log('here in google auth');        
+        this.userDB = credential.user;
         this.notify.update('Welcome to Firestarter!!!', 'success');
-        return this.updateUserData(credential.user);
+        this.updateUserData(credential.user); // if using firestore
+        return credential;
       })
       .catch((error) => this.handleError(error) );
   }
@@ -99,7 +101,7 @@ export class AuthService {
   photoURL: string;
 
   //// Email/Password Auth ////
-  emailSignUp(credentials: EmailPasswordCredentials) {
+  emailSignUp(credentials: EmailPasswordCredentials) :Promise<any> {
     this.email = credentials.email;
     this.password = credentials.password;
     this.username = credentials.displayName;
@@ -108,7 +110,10 @@ export class AuthService {
     return this.afAuth.auth.createUserWithEmailAndPassword(this.email, this.password)
       .then((user) => {
         this.notify.update('Welcome to Firestarter!!!', 'success');
-        return this.updateUserData(user.user); // if using firestore
+        this.userDB = user;
+        console.log(user.displayName);
+          this.updateUserData(user.user); // if using firestore
+        return user;
       })
       .catch((error) => this.handleError(error) );
   }
@@ -120,14 +125,6 @@ export class AuthService {
         console.log('in service settting observable',user.uid);
         this.userDB = user;
         console.log(user.displayName);
-        //const userRef: AngularFirestoreDocument<User> = this.afs.doc(`${user.uid}/userInfo`);
-       /*  userRef.valueChanges().subscribe(
-            (u: User) => {
-              console.log('in service settting observable');
-              //this.pendingUser.next(u.displayName);
-            }
-          ); */
-          //return;
           this.updateUserData(user.user); // if using firestore
         return user;
       })
