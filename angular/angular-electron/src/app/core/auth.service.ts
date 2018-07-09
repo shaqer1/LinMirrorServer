@@ -125,7 +125,7 @@ export class AuthService {
         console.log('in service settting observable',user.uid);
         this.userDB = user;
         console.log(user.displayName);
-          this.updateUserData(user.user); // if using firestore
+          //this.updateUserData(user.user); // if using firestore
         return user;
       })
       .catch((error) => this.handleError(error) );
@@ -158,7 +158,7 @@ export class AuthService {
   private updateUserData(user: UserObj):Promise<any> {
     console.log(user);
     console.log(user.uid); 
-    //console.log(user.user.uid);
+    console.log(user.displayName);
     const userRef: AngularFirestoreDocument<UserObj> = this.afs.doc(`${user.uid}/userInfo`);
     
     const data: UserObj = {
